@@ -6,20 +6,20 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(gapminder)
-library(ggplot2)
 ```
 
-
-```{r echo = FALSE}
+```{r}
 gapminder %>% 
-  filter(year == 1952) %>%
-  mutate(continent = fct_collapse(continent, Asia = c("Asia", "Oceania"))) %>%
-  filter(continent != "Europe") %>%
-  ggplot(aes(x = gdpPercap, y = lifeExp, color = continent)) +
-  geom_point(aes(size  = pop, alpha = 0.5), show.legend = FALSE) +
-  scale_x_log10() +
-  facet_wrap(~continent) 
+  filter(year == 1952) %>% 
+  mutate(continent = fct_collapse(continent, Asia = c("Asia", "Oceania"))) %>% 
+  filter(continent != "Europe") %>% 
+  
+  
+  ggplot(aes(x = gdpPercap, y = lifeExp, size = pop, color = continent)) +
+    geom_point(alpha = 0.5, show.legend = FALSE) +
+    scale_x_log10() +
+  facet_grid(~continent)
 ```
