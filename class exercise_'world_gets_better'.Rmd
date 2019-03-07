@@ -7,25 +7,32 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-library(tidyverse)
 library(gapminder)
-library()
+library(gganimate)
+library(tidyverse)
 ```
 
-```{r}
-gapminder %>% 
-  filter(year == 1952) %>% 
+```{r make_plot, echo=FALSE, cache = TRUE, warning=FALSE}
+x <- gapminder %>% 
+  # filter(year == 1952) %>%
   mutate(continent = fct_collapse(continent, Asia = c("Asia", "Oceania"))) %>% 
   filter(continent != "Europe") %>% 
+  # filter(country %in% c("South Africa", "Mexico", "China")) %>%
   
-  
-  ggplot(aes(x = gdpPercap, y = lifeExp, size = pop, color = continent)) +
+  ggplot(aes(x = gdpPercap, y = lifeExp, size = pop, color = country)) +
     geom_point(alpha = 0.6, show.legend = FALSE) +
     scale_x_log10(breaks = c(1000, 10000),
                   labels = c("$1000", "$10000")) +
-    scale_color_manual(color = continent_colors) +
+    scale_color_manual(values = country_colors) +
   facet_grid(~continent) +
   labs(x = "GDP Per Capita",
-       y = "Life Expectancy")
+       y = "Life Expectancy") +
+  transition_time(year) +
+  labs(title = "The World Gets Better Every Year")
+x
+
+# x + transition_states(year, ) +
+#   ggtitle('The World Gets Better Every Year: {closest_state}')
+
   
 ```
