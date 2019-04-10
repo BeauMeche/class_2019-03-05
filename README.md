@@ -1,1 +1,1 @@
-# class_2019-03-05
+A quick gapminder based animation, nothing too fancy. 
